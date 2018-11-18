@@ -49,4 +49,6 @@ Onde "arquivo" deve ser o nome de um programa "arquivo.asm" presente no diretór
 
 ### TESTE:
 
-O arquivo: test.asm presente1 no diretório é um programa feito a partir da linguagem Assembly hipotética e que pode ser utilizado como teste para averiguar o correto funcionamento do tradutor
+O arquivo test.asm presente no diretório é um programa feito a partir da linguagem Assembly hipotética e que pode ser utilizado como teste para averiguar o correto funcionamento do tradutor
+
+O arquivo test.s presente no diretório é um programa em linguagem Assembly IA-32 utilizado para averiguar o correto funcionamento de um programa nesta linguagem.
