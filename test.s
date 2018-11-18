@@ -55,15 +55,17 @@ add esp, 4
 
 ;fatorial
 
-mov [result], [one] ; Copy um, result
+mov edx, one ; Copy um, result
+mov [result], edx 
 
-mov [i], [one] ; Copy um, i
+mov edx, one ; Copy um, i
+mov [i], edx 
 
 loop:
 
 mov eax, [i] ; load i
 
-sub eax, num ; sub num
+sub eax, [num] ; sub num
 
 cmp eax, 0 ; jmpp fim
 jg fim
@@ -71,7 +73,7 @@ jg fim
 mov eax, [result] ; load result
 
 mov edx, eax ; mult i
-imul [i]
+imul dword [i]
 cmp edx, 0
 jne @overflow_error
 
@@ -79,7 +81,7 @@ mov [result], eax ; store result
 
 mov eax, [i] ; load i
 
-add eax, [one] ; add one
+add eax, one ; add one
 
 mov [i], eax ; store i
 
