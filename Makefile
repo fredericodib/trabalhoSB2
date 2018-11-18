@@ -10,3 +10,5 @@ nasm:
 clear:
 	rm tradutor
 	rm *.s
+	rm *.0
+	rm test
