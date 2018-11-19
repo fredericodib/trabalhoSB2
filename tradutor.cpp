@@ -11,23 +11,30 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
+#include "global.cpp"
+#include "instructions/bss_data.cpp"
+#include "instructions/stop.cpp"
 
 using namespace std;
 
 
-string inputname;
 
-struct instruction {
-  string rotulo;
-  string operacao;
-  string operando1;
-  string operando2;
-};
+void build_file() {
+  ofstream iafile;
+  unsigned int i;
 
-vector<instruction> instruction_array;
+  iafile.open((inputname + ".s").c_str()); /*Abre o arquivo obj*/
 
-
-
+  build_bss_data_section(&iafile);
+  for (i=0;i<instruction_array.size();i++) {
+    if (instruction_array[i].operacao == "INPUT") {
+      cout << "faz algo" << endl;
+    }
+    if (instruction_array[i].operacao == "STOP") {
+      end(&iafile);
+    }
+  }
+}
 
 /*--------------------------- PARSER INICIO ---------------------------*/
 
@@ -192,6 +199,7 @@ int main(int argc, char *argv[]) {
     if (fexists((inputname + ".asm").c_str())) {
       parser();
       print_asm_code();
+      build_file();
     }
 
     else{
