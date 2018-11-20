@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
+#include <cstdlib> 
 
 
 using namespace std;
@@ -43,7 +44,7 @@ bool has_input = false;
 bool has_output = false;
 
 
-operando get_operando(string expression){
+operando get_operando(string expression) {
 	int i = 0;
 	operando op;
 	string aux="";
@@ -66,4 +67,31 @@ operando get_operando(string expression){
 		op.operando2 = aux;
 	}
 	return op;
+}
+
+string ajusted_value(string expression) {
+	string result="";
+	unsigned int i;
+	int num;
+	stringstream out;
+	operando op;
+	op = get_operando(expression);
+
+	if (expression.find(" + ") == string::npos) {
+		return expression;
+	}
+	for (i=0;i<bss_vector.size();i++) {
+		if (bss_vector[i].label == op.operando1) {
+			if (bss_vector[i].type == "char") {
+				result = op.operando1 + " + " + op.operando2;
+			}
+			else {
+				num = atoi(op.operando2.c_str()) * 4;
+				out << num;
+				result = op.operando1 + " + " + out.str();
+			}
+		}
+	}
+	return result;
+
 }

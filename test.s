@@ -17,8 +17,38 @@ size_overflow_msg equ $-overflow_msg
 section .text
 _start: 
 
+
+; Ler do teclado
+mov eax, 3 ; INPUT NUM
+mov ebx, 0
+mov ecx, aux_input
+mov edx, 12
+int 80h
+
+; Converte string para inteiro
+sub esp, 4
+push esi
+sub esp, 4
+push eax
+sub esp, 4
+push edx
+
+mov esi, aux_input
+call @atoi
+mov [NUM], eax
+
+pop edx
+add esp, 4
+pop eax
+add esp, 4
+pop esi
+add esp, 4
+; Termina de converter
+LOOP:
+FIM:
+
 ; Encerra o programa
-mov eax, 1
+mov eax, 1 ; STOP
 mov ebx, 0
 int 80h
 

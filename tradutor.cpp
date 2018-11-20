@@ -14,6 +14,7 @@
 #include "global.cpp"
 #include "instructions/bss_data.cpp"
 #include "instructions/stop.cpp"
+#include "instructions/input.cpp"
 
 using namespace std;
 
@@ -21,17 +22,21 @@ using namespace std;
 
 void build_file() {
   ofstream iafile;
-  unsigned int i;
+  unsigned int i, stop_flag=0;
 
   iafile.open((inputname + ".s").c_str()); /*Abre o arquivo obj*/
 
   build_bss_data_section(&iafile);
   for (i=0;i<instruction_array.size();i++) {
+    if ((instruction_array[i].rotulo != "") && (stop_flag == 0)) {
+      iafile << instruction_array[i].rotulo << ":" << endl;
+    }
     if (instruction_array[i].operacao == "INPUT") {
-      cout << "faz algo" << endl;
+      input(&iafile, instruction_array[i].operando1);
     }
     if (instruction_array[i].operacao == "STOP") {
-      end(&iafile);
+      stop(&iafile);
+      stop_flag = 1;
     }
   }
 }

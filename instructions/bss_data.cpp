@@ -49,7 +49,7 @@ void build_bss_data_section(ofstream *iafile) {
 	/*update table bss*/
 	for (i=0;i<instruction_array.size();i++) {
 		aux = instruction_array[i].operacao;
-		if ((aux == "C_INPUT") || (aux == "S_INPUT") || (aux == "C_OUTPUT") || (aux == "S_OUTPUT")) {
+		if ((aux == "C_INPUT") || (aux == "S_INPUT") || (aux == "C_OUTPUT")) {
 			for (j=0;j<bss_vector.size();j++) {
 				if (bss_vector[j].label == get_operando(instruction_array[i].operando1).operando1) {
 					bss_vector[j].type = "char";

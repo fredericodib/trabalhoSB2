@@ -100,9 +100,9 @@ void print_overflow(ofstream *iafile) {
 	*iafile << "; ----------------------- overflow fim ---------------------------------" << endl;
 }
 
-void end(ofstream *iafile) {
-	*iafile << "; Encerra o programa" << endl;
-	*iafile << "mov eax, 1" << endl;
+void stop(ofstream *iafile) {
+	*iafile << endl << "; Encerra o programa" << endl;
+	*iafile << "mov eax, 1 ; STOP" << endl;
 	*iafile << "mov ebx, 0" << endl;
 	*iafile << "int 80h" << endl << endl;
 	if (has_input) {
