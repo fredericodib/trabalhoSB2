@@ -15,6 +15,8 @@
 #include "instructions/bss_data.cpp"
 #include "instructions/stop.cpp"
 #include "instructions/input.cpp"
+#include "instructions/copy.cpp"
+#include "instructions/load.cpp"
 
 using namespace std;
 
@@ -31,8 +33,14 @@ void build_file() {
     if ((instruction_array[i].rotulo != "") && (stop_flag == 0)) {
       iafile << instruction_array[i].rotulo << ":" << endl;
     }
+    if (instruction_array[i].operacao == "LOAD") {
+      load(&iafile, instruction_array[i].operando1);
+    }
     if (instruction_array[i].operacao == "INPUT") {
       input(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "COPY") {
+      copy(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
     if (instruction_array[i].operacao == "STOP") {
       stop(&iafile);

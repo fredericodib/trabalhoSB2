@@ -44,7 +44,21 @@ add esp, 4
 pop esi
 add esp, 4
 ; Termina de converter
+
+xor edx, edx ; COPY ONE RESULT
+mov edx, ONE
+mov [RESULT], edx
+
+xor edx, edx ; COPY ONE I
+mov edx, ONE
+mov [I], edx
 LOOP:
+
+mov eax, [I] ; LOAD I
+
+mov eax, [RESULT] ; LOAD RESULT
+
+mov eax, [I] ; LOAD I
 FIM:
 
 ; Encerra o programa

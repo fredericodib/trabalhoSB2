@@ -95,3 +95,32 @@ string ajusted_value(string expression) {
 	return result;
 
 }
+
+bool is_bss_int(string expression) {
+	unsigned int i;
+	operando op;
+	op = get_operando(expression);
+	for (i=0;i<bss_vector.size();i++) {
+		if (bss_vector[i].label == op.operando1) {
+			if (bss_vector[i].type == "char") {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+	}
+	return true;
+}
+
+bool is_const(string expression) {
+	unsigned int i;
+	operando op;
+	op = get_operando(expression);
+	for (i=0;i<const_vector.size();i++) {
+		if (const_vector[i].label == op.operando1) {
+			return true;
+		}
+	}
+	return false;
+}
