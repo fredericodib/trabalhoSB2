@@ -7,7 +7,7 @@ NUM resb 4
 aux_input resb 12
 aux_output resb 12
 
-section .bss
+section .data
 ONE equ 1
 blank_msg db "", 0DH, 0AH
 size_blank_msg equ $-blank_msg
