@@ -58,11 +58,25 @@ mov eax, [I] ; LOAD I
 
 sub eax, [NUM] ; SUB NUM
 
+cmp eax, 0 ; JMPP FIM
+jg FIM
+
 mov eax, [RESULT] ; LOAD RESULT
+
+mov edx, eax ; MULT I
+imul dword [I]
+cmp edx, 0
+jne @overflow_error
+
+mov [RESULT], eax ; STORE RESULT
 
 mov eax, [I] ; LOAD I
 
 add eax, ONE ; ADD ONE
+
+mov [I], eax ; STORE I
+
+jmp LOOP ; jmp LOOP
 FIM:
 
 ; Encerra o programa

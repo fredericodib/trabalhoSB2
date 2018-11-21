@@ -19,6 +19,10 @@
 #include "instructions/load.cpp"
 #include "instructions/sub.cpp"
 #include "instructions/add.cpp"
+#include "instructions/jmpp.cpp"
+#include "instructions/jmp.cpp"
+#include "instructions/mult.cpp"
+#include "instructions/store.cpp"
 
 using namespace std;
 
@@ -38,11 +42,23 @@ void build_file() {
     if (instruction_array[i].operacao == "LOAD") { /*Instrução load*/
       load(&iafile, instruction_array[i].operando1);
     }
+    if (instruction_array[i].operacao == "STORE") { /*Instrução store*/
+      store(&iafile, instruction_array[i].operando1);
+    }
     if (instruction_array[i].operacao == "SUB") { /*Instrução sub*/
       sub(&iafile, instruction_array[i].operando1);
     }
     if (instruction_array[i].operacao == "ADD") { /*Instrução add*/
       add(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "MULT") { /*Instrução mult*/
+      mult(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "JMPP") { /*Instrução jmpp*/
+      jmpp(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "JMP") { /*Instrução jmp*/
+      jmp(&iafile, instruction_array[i].operando1);
     }
     if (instruction_array[i].operacao == "INPUT") { /*Instrução input*/
       input(&iafile, instruction_array[i].operando1);
