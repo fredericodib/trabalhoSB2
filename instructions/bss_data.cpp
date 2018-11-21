@@ -46,7 +46,7 @@ void build_bss_data_section(ofstream *iafile) {
 		}
 	}
 
-	/*update table bss*/
+	/*update table bss, atualiza os tipos como char ou int*/
 	for (i=0;i<instruction_array.size();i++) {
 		aux = instruction_array[i].operacao;
 		if ((aux == "C_INPUT") || (aux == "S_INPUT") || (aux == "C_OUTPUT")) {
@@ -58,7 +58,7 @@ void build_bss_data_section(ofstream *iafile) {
 		}
 	}
 
-	/*print bss and data table*/
+	/*print bss table*/
 	*iafile << "section .bss" << endl;
 	for (i=0;i<bss_vector.size();i++) {
 		if (bss_vector[i].type == "char") {
@@ -68,13 +68,15 @@ void build_bss_data_section(ofstream *iafile) {
 			*iafile << bss_vector[i].label << " resb " << bss_vector[i].size*4 << endl;
 		}
 	}
-	if (has_input) {
+	if (has_input) { /*Aux usada em input*/
 		*iafile << "aux_input resb 12" << endl;
 	}
-	if (has_output) {
+	if (has_output) { /*Aux usada em output*/
 		*iafile << "aux_output resb 12" << endl;
 	}
-	*iafile << endl << "section .bss" << endl;
+
+	/*print data table*/
+	*iafile << endl << "section .data" << endl;
 	for (i=0;i<const_vector.size();i++) {
 		*iafile << const_vector[i].label << " equ " << const_vector[i].value << endl;
 	}

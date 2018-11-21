@@ -105,13 +105,13 @@ void stop(ofstream *iafile) {
 	*iafile << "mov eax, 1 ; STOP" << endl;
 	*iafile << "mov ebx, 0" << endl;
 	*iafile << "int 80h" << endl << endl;
-	if (has_input) {
+	if (has_input) { /*Caso tenha input imprime atoi*/
 		print_atoi(iafile);
 	}
-	if (has_output) {
+	if (has_output) { /*Caso tenha output imprime itoa*/
 		print_itoa(iafile);
 	}
-	if (has_mult) {
+	if (has_mult) { /*Caso tenha um mult imprime a função de overflow*/
 		print_overflow(iafile);
 	}
 }

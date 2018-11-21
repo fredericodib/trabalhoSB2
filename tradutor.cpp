@@ -30,19 +30,19 @@ void build_file() {
 
   build_bss_data_section(&iafile);
   for (i=0;i<instruction_array.size();i++) {
-    if ((instruction_array[i].rotulo != "") && (stop_flag == 0)) {
+    if ((instruction_array[i].rotulo != "") && (stop_flag == 0)) { /*Imprime rotulos até chegar no stop*/
       iafile << instruction_array[i].rotulo << ":" << endl;
     }
-    if (instruction_array[i].operacao == "LOAD") {
+    if (instruction_array[i].operacao == "LOAD") { /*Instrução load*/
       load(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "INPUT") {
+    if (instruction_array[i].operacao == "INPUT") { /*Instrução input*/
       input(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "COPY") {
+    if (instruction_array[i].operacao == "COPY") { /*Instrução copy*/
       copy(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
-    if (instruction_array[i].operacao == "STOP") {
+    if (instruction_array[i].operacao == "STOP") { /*Instrução stop*/
       stop(&iafile);
       stop_flag = 1;
     }
