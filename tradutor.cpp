@@ -17,6 +17,8 @@
 #include "instructions/input.cpp"
 #include "instructions/copy.cpp"
 #include "instructions/load.cpp"
+#include "instructions/sub.cpp"
+#include "instructions/add.cpp"
 
 using namespace std;
 
@@ -35,6 +37,12 @@ void build_file() {
     }
     if (instruction_array[i].operacao == "LOAD") { /*Instrução load*/
       load(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "SUB") { /*Instrução sub*/
+      sub(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "ADD") { /*Instrução add*/
+      add(&iafile, instruction_array[i].operando1);
     }
     if (instruction_array[i].operacao == "INPUT") { /*Instrução input*/
       input(&iafile, instruction_array[i].operando1);

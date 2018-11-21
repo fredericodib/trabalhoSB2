@@ -56,9 +56,13 @@ LOOP:
 
 mov eax, [I] ; LOAD I
 
+sub eax, [NUM] ; SUB NUM
+
 mov eax, [RESULT] ; LOAD RESULT
 
 mov eax, [I] ; LOAD I
+
+add eax, ONE ; ADD ONE
 FIM:
 
 ; Encerra o programa
