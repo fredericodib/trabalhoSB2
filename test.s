@@ -17,6 +17,8 @@ _start:
 
 
 ; Ler do teclado
+sub esp, 4
+push eax
 mov eax, 3 ; INPUT NUM
 mov ebx, 0
 mov ecx, aux_input
@@ -41,9 +43,13 @@ pop eax
 add esp, 4
 pop esi
 add esp, 4
+pop edx
+add esp, 4
 ; Termina de converter
 
 ; Ler do teclado
+sub esp, 4
+push eax
 mov eax, 3 ; INPUT NUM + 1
 mov ebx, 0
 mov ecx, aux_input
@@ -68,9 +74,13 @@ pop eax
 add esp, 4
 pop esi
 add esp, 4
+pop edx
+add esp, 4
 ; Termina de converter
 
 ; Ler do teclado
+sub esp, 4
+push eax
 mov eax, 3 ; INPUT NUM + 2
 mov ebx, 0
 mov ecx, aux_input
@@ -95,6 +105,8 @@ pop eax
 add esp, 4
 pop esi
 add esp, 4
+pop edx
+add esp, 4
 ; Termina de converter
 
 mov eax, [NUM] ; LOAD NUM
@@ -112,6 +124,8 @@ jne @overflow_error
 mov [RESULT], eax ; STORE RESULT
 
 ; Convert inteiro para string
+sub esp, 4
+push eax
 sub esp, 4 ; OUTPUT RESULT
 push eax
 sub esp, 4
@@ -162,8 +176,12 @@ mov BYTE [aux_output+8], 0
 mov BYTE [aux_output+9], 0
 mov BYTE [aux_output+10], 0
 mov BYTE [aux_output+11], 0
+pop edx
+add esp, 4
 
 ; Convert inteiro para string
+sub esp, 4
+push eax
 sub esp, 4 ; OUTPUT NUM
 push eax
 sub esp, 4
@@ -214,8 +232,12 @@ mov BYTE [aux_output+8], 0
 mov BYTE [aux_output+9], 0
 mov BYTE [aux_output+10], 0
 mov BYTE [aux_output+11], 0
+pop edx
+add esp, 4
 
 ; Convert inteiro para string
+sub esp, 4
+push eax
 sub esp, 4 ; OUTPUT NUM + 1
 push eax
 sub esp, 4
@@ -266,8 +288,12 @@ mov BYTE [aux_output+8], 0
 mov BYTE [aux_output+9], 0
 mov BYTE [aux_output+10], 0
 mov BYTE [aux_output+11], 0
+pop edx
+add esp, 4
 
 ; Convert inteiro para string
+sub esp, 4
+push eax
 sub esp, 4 ; OUTPUT NUM + 2
 push eax
 sub esp, 4
@@ -318,6 +344,8 @@ mov BYTE [aux_output+8], 0
 mov BYTE [aux_output+9], 0
 mov BYTE [aux_output+10], 0
 mov BYTE [aux_output+11], 0
+pop edx
+add esp, 4
 
 ; Encerra o programa
 mov eax, 1 ; STOP

@@ -12,6 +12,8 @@ using namespace std;
 
 void output(ofstream *iafile, string operando1) {
 	*iafile << endl << "; Convert inteiro para string" << endl;
+	*iafile << "sub esp, 4" << endl;
+	*iafile << "push eax" << endl;
 	*iafile << "sub esp, 4 ; OUTPUT " << operando1 << endl;
 	*iafile << "push eax" << endl;
 	*iafile << "sub esp, 4" << endl;
@@ -60,4 +62,6 @@ void output(ofstream *iafile, string operando1) {
 	*iafile << "mov BYTE [aux_output+9], 0" << endl;
 	*iafile << "mov BYTE [aux_output+10], 0" << endl;
 	*iafile << "mov BYTE [aux_output+11], 0" << endl;
+	*iafile << "pop edx" << endl;
+	*iafile << "add esp, 4" << endl;
 }
