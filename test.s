@@ -79,32 +79,43 @@ mov [I], eax ; STORE I
 jmp LOOP ; jmp LOOP
 FIM:
 
-; Ler do teclado
-mov eax, 3 ; INPUT RESULT
-mov ebx, 0
-mov ecx, aux_input
-mov edx, 12
-int 80h
-
-; Converte string para inteiro
+; Convert inteiro para string
+sub esp, 4 ; OUTPUT RESULT
+push eax
 sub esp, 4
 push esi
 sub esp, 4
-push eax
+push ecx
 sub esp, 4
 push edx
+sub esp, 4
+push ebx
 
-mov esi, aux_input
-call @atoi
-mov [RESULT], eax
+mov eax, [RESULT]
+lea esi, [aux_output]
+mov ecx, 12
+call @itoa
 
+pop ebx
+add esp, 4
 pop edx
 add esp, 4
-pop eax
+pop ecx
 add esp, 4
 pop esi
 add esp, 4
+pop eax
+add esp, 4
 ; Termina de converter
+; Imprimir aux_output
+mov eax, 4
+mov ebx, 1
+mov ecx, aux_output
+mov edx, 12
+int 80h
+mov ecx, blank_msg
+mov edx, size_blank_msg
+int 80h
 
 ; Encerra o programa
 mov eax, 1 ; STOP
