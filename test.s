@@ -1,14 +1,12 @@
 global _start
 
 section .bss
+NUM resb 12
 RESULT resb 4
-I resb 4
-NUM resb 4
 aux_input resb 12
 aux_output resb 12
 
 section .data
-ONE equ 1
 blank_msg db "", 0DH, 0AH
 size_blank_msg equ $-blank_msg
 overflow_msg db "Erro, houve um overflow", 0DH, 0AH
@@ -45,39 +43,73 @@ pop esi
 add esp, 4
 ; Termina de converter
 
-xor edx, edx ; COPY ONE RESULT
-mov edx, ONE
-mov [RESULT], edx
+; Ler do teclado
+mov eax, 3 ; INPUT NUM + 1
+mov ebx, 0
+mov ecx, aux_input
+mov edx, 12
+int 80h
 
-xor edx, edx ; COPY ONE I
-mov edx, ONE
-mov [I], edx
-LOOP:
+; Converte string para inteiro
+sub esp, 4
+push esi
+sub esp, 4
+push eax
+sub esp, 4
+push edx
 
-mov eax, [I] ; LOAD I
+mov esi, aux_input
+call @atoi
+mov [NUM + 4], eax
 
-sub eax, [NUM] ; SUB NUM
+pop edx
+add esp, 4
+pop eax
+add esp, 4
+pop esi
+add esp, 4
+; Termina de converter
 
-cmp eax, 0 ; JMPP FIM
-jg FIM
+; Ler do teclado
+mov eax, 3 ; INPUT NUM + 2
+mov ebx, 0
+mov ecx, aux_input
+mov edx, 12
+int 80h
 
-mov eax, [RESULT] ; LOAD RESULT
+; Converte string para inteiro
+sub esp, 4
+push esi
+sub esp, 4
+push eax
+sub esp, 4
+push edx
 
-mov edx, eax ; MULT I
-imul dword [I]
+mov esi, aux_input
+call @atoi
+mov [NUM + 8], eax
+
+pop edx
+add esp, 4
+pop eax
+add esp, 4
+pop esi
+add esp, 4
+; Termina de converter
+
+mov eax, [NUM] ; LOAD NUM
+
+mov edx, eax ; MULT NUM + 1
+imul dword [NUM + 4]
+cmp edx, 0
+jne @overflow_error
+
+mov edx, eax ; MULT NUM + 2
+imul dword [NUM + 8]
 cmp edx, 0
 jne @overflow_error
 
 mov [RESULT], eax ; STORE RESULT
-
-mov eax, [I] ; LOAD I
-
-add eax, ONE ; ADD ONE
-
-mov [I], eax ; STORE I
-
-jmp LOOP ; jmp LOOP
-FIM:
 
 ; Convert inteiro para string
 sub esp, 4 ; OUTPUT RESULT
@@ -118,6 +150,174 @@ mov ebx, 1
 mov ecx, blank_msg
 mov edx, size_blank_msg
 int 80h
+mov BYTE [aux_output], 0
+mov BYTE [aux_output+1], 0
+mov BYTE [aux_output+2], 0
+mov BYTE [aux_output+3], 0
+mov BYTE [aux_output+4], 0
+mov BYTE [aux_output+5], 0
+mov BYTE [aux_output+6], 0
+mov BYTE [aux_output+7], 0
+mov BYTE [aux_output+8], 0
+mov BYTE [aux_output+9], 0
+mov BYTE [aux_output+10], 0
+mov BYTE [aux_output+11], 0
+
+; Convert inteiro para string
+sub esp, 4 ; OUTPUT NUM
+push eax
+sub esp, 4
+push esi
+sub esp, 4
+push ecx
+sub esp, 4
+push edx
+sub esp, 4
+push ebx
+
+mov eax, [NUM]
+lea esi, [aux_output]
+mov ecx, 12
+call @itoa
+
+pop ebx
+add esp, 4
+pop edx
+add esp, 4
+pop ecx
+add esp, 4
+pop esi
+add esp, 4
+pop eax
+add esp, 4
+; Termina de converter
+; Imprimir aux_output
+mov eax, 4
+mov ebx, 1
+mov ecx, aux_output
+mov edx, 12
+int 80h
+mov eax, 4
+mov ebx, 1
+mov ecx, blank_msg
+mov edx, size_blank_msg
+int 80h
+mov BYTE [aux_output], 0
+mov BYTE [aux_output+1], 0
+mov BYTE [aux_output+2], 0
+mov BYTE [aux_output+3], 0
+mov BYTE [aux_output+4], 0
+mov BYTE [aux_output+5], 0
+mov BYTE [aux_output+6], 0
+mov BYTE [aux_output+7], 0
+mov BYTE [aux_output+8], 0
+mov BYTE [aux_output+9], 0
+mov BYTE [aux_output+10], 0
+mov BYTE [aux_output+11], 0
+
+; Convert inteiro para string
+sub esp, 4 ; OUTPUT NUM + 1
+push eax
+sub esp, 4
+push esi
+sub esp, 4
+push ecx
+sub esp, 4
+push edx
+sub esp, 4
+push ebx
+
+mov eax, [NUM + 4]
+lea esi, [aux_output]
+mov ecx, 12
+call @itoa
+
+pop ebx
+add esp, 4
+pop edx
+add esp, 4
+pop ecx
+add esp, 4
+pop esi
+add esp, 4
+pop eax
+add esp, 4
+; Termina de converter
+; Imprimir aux_output
+mov eax, 4
+mov ebx, 1
+mov ecx, aux_output
+mov edx, 12
+int 80h
+mov eax, 4
+mov ebx, 1
+mov ecx, blank_msg
+mov edx, size_blank_msg
+int 80h
+mov BYTE [aux_output], 0
+mov BYTE [aux_output+1], 0
+mov BYTE [aux_output+2], 0
+mov BYTE [aux_output+3], 0
+mov BYTE [aux_output+4], 0
+mov BYTE [aux_output+5], 0
+mov BYTE [aux_output+6], 0
+mov BYTE [aux_output+7], 0
+mov BYTE [aux_output+8], 0
+mov BYTE [aux_output+9], 0
+mov BYTE [aux_output+10], 0
+mov BYTE [aux_output+11], 0
+
+; Convert inteiro para string
+sub esp, 4 ; OUTPUT NUM + 2
+push eax
+sub esp, 4
+push esi
+sub esp, 4
+push ecx
+sub esp, 4
+push edx
+sub esp, 4
+push ebx
+
+mov eax, [NUM + 8]
+lea esi, [aux_output]
+mov ecx, 12
+call @itoa
+
+pop ebx
+add esp, 4
+pop edx
+add esp, 4
+pop ecx
+add esp, 4
+pop esi
+add esp, 4
+pop eax
+add esp, 4
+; Termina de converter
+; Imprimir aux_output
+mov eax, 4
+mov ebx, 1
+mov ecx, aux_output
+mov edx, 12
+int 80h
+mov eax, 4
+mov ebx, 1
+mov ecx, blank_msg
+mov edx, size_blank_msg
+int 80h
+mov BYTE [aux_output], 0
+mov BYTE [aux_output+1], 0
+mov BYTE [aux_output+2], 0
+mov BYTE [aux_output+3], 0
+mov BYTE [aux_output+4], 0
+mov BYTE [aux_output+5], 0
+mov BYTE [aux_output+6], 0
+mov BYTE [aux_output+7], 0
+mov BYTE [aux_output+8], 0
+mov BYTE [aux_output+9], 0
+mov BYTE [aux_output+10], 0
+mov BYTE [aux_output+11], 0
 
 ; Encerra o programa
 mov eax, 1 ; STOP

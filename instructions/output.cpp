@@ -48,4 +48,16 @@ void output(ofstream *iafile, string operando1) {
 	*iafile << "mov ecx, blank_msg" << endl;
 	*iafile << "mov edx, size_blank_msg" << endl;
 	*iafile << "int 80h" << endl;
+	*iafile << "mov BYTE [aux_output], 0" << endl;
+	*iafile << "mov BYTE [aux_output+1], 0" << endl;
+	*iafile << "mov BYTE [aux_output+2], 0" << endl;
+	*iafile << "mov BYTE [aux_output+3], 0" << endl;
+	*iafile << "mov BYTE [aux_output+4], 0" << endl;
+	*iafile << "mov BYTE [aux_output+5], 0" << endl;
+	*iafile << "mov BYTE [aux_output+6], 0" << endl;
+	*iafile << "mov BYTE [aux_output+7], 0" << endl;
+	*iafile << "mov BYTE [aux_output+8], 0" << endl;
+	*iafile << "mov BYTE [aux_output+9], 0" << endl;
+	*iafile << "mov BYTE [aux_output+10], 0" << endl;
+	*iafile << "mov BYTE [aux_output+11], 0" << endl;
 }
