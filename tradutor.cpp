@@ -23,6 +23,7 @@
 #include "instructions/jmp.cpp"
 #include "instructions/mult.cpp"
 #include "instructions/store.cpp"
+#include "instructions/output.cpp"
 
 using namespace std;
 
@@ -62,6 +63,9 @@ void build_file() {
     }
     if (instruction_array[i].operacao == "INPUT") { /*Instrução input*/
       input(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "OUTPUT") { /*Instrução output*/
+      output(&iafile, instruction_array[i].operando1);
     }
     if (instruction_array[i].operacao == "COPY") { /*Instrução copy*/
       copy(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
