@@ -22,7 +22,7 @@ void build_bss_data_section(ofstream *iafile) {
 		if (instruction_array[i].operacao == "INPUT") {
 			has_input = true;
 		}
-		if (instruction_array[i].operacao == "OUTPUT") {
+		if ((instruction_array[i].operacao == "OUTPUT") || (instruction_array[i].operacao == "C_OUTPUT") || (instruction_array[i].operacao == "S_OUTPUT")) {
 			has_output = true;
 		}
 		if (instruction_array[i].operacao == "MULT") {
@@ -39,7 +39,7 @@ void build_bss_data_section(ofstream *iafile) {
 			}
 			bss_vector.push_back(space);
 		}
-		if (instruction_array[i].operacao == "CONST") {
+		if ((instruction_array[i].operacao == "CONST") || (instruction_array[i].operacao == "EQU")) {
 			cons.label = instruction_array[i].rotulo;
 			cons.value = instruction_array[i].operando1;
 			const_vector.push_back(cons);
@@ -62,7 +62,7 @@ void build_bss_data_section(ofstream *iafile) {
 	*iafile << "section .bss" << endl;
 	for (i=0;i<bss_vector.size();i++) {
 		if (bss_vector[i].type == "char") {
-			*iafile << bss_vector[i].label << " resb " << bss_vector[i].size << endl;
+			*iafile << bss_vector[i].label << " resb " << bss_vector[i].size+1 << endl;
 		}
 		else {
 			*iafile << bss_vector[i].label << " resb " << bss_vector[i].size*4 << endl;

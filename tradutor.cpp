@@ -35,7 +35,7 @@ using namespace std;
 
 void build_file() {
   ofstream iafile;
-  unsigned int i, stop_flag=0;
+  unsigned int i, stop_flag=1;
 
   iafile.open((inputname + ".s").c_str()); /*Abre o arquivo obj*/
 
@@ -71,12 +71,21 @@ void build_file() {
     if (instruction_array[i].operacao == "OUTPUT") { /*Instrução output*/
       output(&iafile, instruction_array[i].operando1);
     }
+    if (instruction_array[i].operacao == "C_INPUT") { /*Instrução input*/
+      c_input(&iafile, instruction_array[i].operando1);
+    }
+    if (instruction_array[i].operacao == "C_OUTPUT") { /*Instrução output*/
+      c_output(&iafile, instruction_array[i].operando1);
+    }
     if (instruction_array[i].operacao == "COPY") { /*Instrução copy*/
       copy(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
     if (instruction_array[i].operacao == "STOP") { /*Instrução stop*/
       stop(&iafile);
       stop_flag = 1;
+    }
+    if ((instruction_array[i].operacao == "SECTION") && (instruction_array[i].operando1 == "TEXT")) { /*Instrução stop*/
+      stop_flag = 0;
     }
   }
 }

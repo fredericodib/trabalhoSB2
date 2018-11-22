@@ -15,7 +15,7 @@ void c_input(ofstream *iafile, string operando1) {
 	*iafile << "mov eax, 3 ; C_INPUT " << operando1 << endl;
 	*iafile << "mov ebx, 0" << endl;
 	*iafile << "mov ecx, " << operando1 << endl;
-	*iafile << "mov edx, 1" << endl;
+	*iafile << "mov edx, 2" << endl;
 	*iafile << "int 80h" << endl;
 	*iafile << "pop edx" << endl;
 	*iafile << "add esp, 4" << endl;
