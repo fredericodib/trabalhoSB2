@@ -113,6 +113,8 @@ mov ebx, 1
 mov ecx, aux_output
 mov edx, 12
 int 80h
+mov eax, 4
+mov ebx, 1
 mov ecx, blank_msg
 mov edx, size_blank_msg
 int 80h
