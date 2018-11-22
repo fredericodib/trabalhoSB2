@@ -77,6 +77,12 @@ void build_file() {
     if (instruction_array[i].operacao == "C_OUTPUT") { /*Instrução output*/
       c_output(&iafile, instruction_array[i].operando1);
     }
+    if (instruction_array[i].operacao == "S_INPUT") { /*Instrução input*/
+      s_input(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
+    }
+    if (instruction_array[i].operacao == "S_OUTPUT") { /*Instrução output*/
+      s_output(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
+    }
     if (instruction_array[i].operacao == "COPY") { /*Instrução copy*/
       copy(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
