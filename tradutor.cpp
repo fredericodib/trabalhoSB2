@@ -25,7 +25,9 @@
 #include "instructions/store.cpp"
 #include "instructions/output.cpp"
 #include "instructions/c_input.cpp"
+#include "instructions/s_input.cpp"
 #include "instructions/c_output.cpp"
+#include "instructions/s_output.cpp"
 
 using namespace std;
 
