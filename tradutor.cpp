@@ -22,6 +22,7 @@
 #include "instructions/jmpp.cpp"
 #include "instructions/jmp.cpp"
 #include "instructions/mult.cpp"
+#include "instructions/idiv.cpp"
 #include "instructions/store.cpp"
 #include "instructions/output.cpp"
 #include "instructions/c_input.cpp"
@@ -58,6 +59,9 @@ void build_file() {
     }
     else if (instruction_array[i].operacao == "MULT") { /*Instrução mult*/
       mult(&iafile, instruction_array[i].operando1);
+    }
+    else if (instruction_array[i].operacao == "DIV") { /*Instrução div*/
+      idiv(&iafile, instruction_array[i].operando1);
     }
     else if (instruction_array[i].operacao == "JMPP") { /*Instrução jmpp*/
       jmpp(&iafile, instruction_array[i].operando1);
