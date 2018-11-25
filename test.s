@@ -1,14 +1,13 @@
 global _start
 
 section .bss
-RESULT resb 4
 I resb 4
 NUM resb 4
 aux_input resb 12
 aux_output resb 12
 
 section .data
-ONE equ 1
+ONE equ -10
 blank_msg db "", 0DH, 0AH
 size_blank_msg equ $-blank_msg
 overflow_msg db "Erro, houve um overflow", 0DH, 0AH
@@ -49,44 +48,22 @@ pop edx
 add esp, 4
 ; Termina de converter
 
-xor edx, edx ; COPY ONE RESULT
-mov edx, ONE
-mov [RESULT], edx
-
 xor edx, edx ; COPY ONE I
 mov edx, ONE
 mov [I], edx
-LOOP:
 
-mov eax, [I] ; LOAD I
+mov eax, [NUM] ; LOAD NUM
 
-sub eax, [NUM] ; SUB NUM
+mov edx, eax ; MULT ONE
+mov ebx, ONE
+imul dword ebx
 
-cmp eax, 0 ; JMPP FIM
-jg FIM
-
-mov eax, [RESULT] ; LOAD RESULT
-
-mov edx, eax ; MULT I
-imul dword [I]
-cmp edx, 0
-jne @overflow_error
-
-mov [RESULT], eax ; STORE RESULT
-
-mov eax, [I] ; LOAD I
-
-add eax, ONE ; ADD ONE
-
-mov [I], eax ; STORE I
-
-jmp LOOP ; jmp LOOP
-FIM:
+mov [NUM], eax ; STORE NUM
 
 ; Convert inteiro para string
 sub esp, 4
 push eax
-sub esp, 4 ; OUTPUT RESULT
+sub esp, 4 ; OUTPUT NUM
 push eax
 sub esp, 4
 push esi
@@ -97,7 +74,7 @@ push edx
 sub esp, 4
 push ebx
 
-mov eax, [RESULT]
+mov eax, [NUM]
 lea esi, [aux_output]
 mov ecx, 12
 call @itoa
