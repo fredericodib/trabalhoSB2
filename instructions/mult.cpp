@@ -19,6 +19,5 @@ void mult(ofstream *iafile, string operando1) {
 	else { /*Dando mult em uma variavel normal*/
 		*iafile << "imul dword ["<< ajusted_value(operando1) << "]" << endl;
 	}
-	*iafile << "cmp edx, 0" << endl;
-	*iafile << "jne @overflow_error" << endl;
+	*iafile << "call @overflow_error" << endl;
 }

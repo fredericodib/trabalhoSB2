@@ -88,6 +88,10 @@ void print_itoa(ofstream *iafile) {
 void print_overflow(ofstream *iafile) {
 	*iafile << "; ----------------------- overflow inicio ---------------------------------" << endl;
 	*iafile << "@overflow_error:" << endl;
+	*iafile << "cmp edx, 0" << endl;
+	*iafile << "je ret_overflow" << endl;
+	*iafile << "cmp edx, -1" << endl;
+	*iafile << "je ret_overflow" << endl;
 	*iafile << "mov eax, 4" << endl;
 	*iafile << "mov ebx, 1" << endl;
 	*iafile << "mov ecx, overflow_msg" << endl;
@@ -97,6 +101,8 @@ void print_overflow(ofstream *iafile) {
 	*iafile << "mov eax, 1" << endl;
 	*iafile << "mov ebx, 0" << endl;
 	*iafile << "int 80h" << endl;
+	*iafile << "ret_overflow:" << endl;
+	*iafile << "ret" << endl;
 	*iafile << "; ----------------------- overflow fim ---------------------------------" << endl;
 }
 
