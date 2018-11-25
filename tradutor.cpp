@@ -105,7 +105,7 @@ void build_file() {
           break;
         }
       }
-      if(if_flag == 0){
+      if(if_flag != 1){
         i++;
       }
     }
