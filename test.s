@@ -1,14 +1,18 @@
 global _start
 
 section .bss
+RESULT resb 4
+I resb 4
 NUM resb 4
 aux_input resb 12
 aux_output resb 12
 
 section .data
-ONE equ 5
+ONE equ 1
 blank_msg db "", 0DH, 0AH
 size_blank_msg equ $-blank_msg
+overflow_msg db "Erro, houve um overflow", 0DH, 0AH
+size_overflow_msg equ $-overflow_msg
 
 section .text
 _start: 
@@ -45,18 +49,43 @@ pop edx
 add esp, 4
 ; Termina de converter
 
-mov eax, [NUM] ; LOAD NUM
+xor edx, edx ; COPY ONE RESULT
+mov edx, ONE
+mov [RESULT], edx
 
-cdq ; DIV ONE
-mov ebx, ONE
-idiv dword ebx
+xor edx, edx ; COPY ONE I
+mov edx, ONE
+mov [I], edx
+LOOP:
 
-mov [NUM], eax ; STORE NUM
+mov eax, [I] ; LOAD I
+
+sub eax, [NUM] ; SUB NUM
+
+cmp eax, 0 ; JMPP FIM
+jg FIM
+
+mov eax, [RESULT] ; LOAD RESULT
+
+mov edx, eax ; MULT I
+imul dword [I]
+call @overflow_error
+
+mov [RESULT], eax ; STORE RESULT
+
+mov eax, [I] ; LOAD I
+
+add eax, ONE ; ADD ONE
+
+mov [I], eax ; STORE I
+
+jmp LOOP ; jmp LOOP
+FIM:
 
 ; Convert inteiro para string
 sub esp, 4
 push eax
-sub esp, 4 ; OUTPUT NUM
+sub esp, 4 ; OUTPUT RESULT
 push eax
 sub esp, 4
 push esi
@@ -67,7 +96,7 @@ push edx
 sub esp, 4
 push ebx
 
-mov eax, [NUM]
+mov eax, [RESULT]
 lea esi, [aux_output]
 mov ecx, 12
 call @itoa
@@ -187,3 +216,21 @@ mov [esi], DL
 ret
 ; ----------------------- itoa fim ---------------------------------
 
+; ----------------------- overflow inicio ---------------------------------
+@overflow_error:
+cmp edx, 0
+je ret_overflow
+cmp edx, -1
+je ret_overflow
+mov eax, 4
+mov ebx, 1
+mov ecx, overflow_msg
+mov edx, size_overflow_msg
+int 80h
+; Encerra o programa
+mov eax, 1
+mov ebx, 0
+int 80h
+ret_overflow:
+ret
+; ----------------------- overflow fim ---------------------------------
