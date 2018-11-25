@@ -35,7 +35,7 @@ using namespace std;
 
 void build_file() {
   ofstream iafile;
-  unsigned int i, stop_flag=1;
+  unsigned int i, j, stop_flag=1, if_flag;
 
   iafile.open((inputname + ".s").c_str()); /*Abre o arquivo obj*/
 
@@ -47,51 +47,63 @@ void build_file() {
     if (instruction_array[i].operacao == "LOAD") { /*Instrução load*/
       load(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "STORE") { /*Instrução store*/
+    else if (instruction_array[i].operacao == "STORE") { /*Instrução store*/
       store(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "SUB") { /*Instrução sub*/
+    else if (instruction_array[i].operacao == "SUB") { /*Instrução sub*/
       sub(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "ADD") { /*Instrução add*/
+    else if (instruction_array[i].operacao == "ADD") { /*Instrução add*/
       add(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "MULT") { /*Instrução mult*/
+    else if (instruction_array[i].operacao == "MULT") { /*Instrução mult*/
       mult(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "JMPP") { /*Instrução jmpp*/
+    else if (instruction_array[i].operacao == "JMPP") { /*Instrução jmpp*/
       jmpp(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "JMP") { /*Instrução jmp*/
+    else if (instruction_array[i].operacao == "JMP") { /*Instrução jmp*/
       jmp(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "INPUT") { /*Instrução input*/
+    else if (instruction_array[i].operacao == "INPUT") { /*Instrução input*/
       input(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "OUTPUT") { /*Instrução output*/
+    else if (instruction_array[i].operacao == "OUTPUT") { /*Instrução output*/
       output(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "C_INPUT") { /*Instrução input*/
+    else if (instruction_array[i].operacao == "C_INPUT") { /*Instrução input*/
       c_input(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "C_OUTPUT") { /*Instrução output*/
+    else if (instruction_array[i].operacao == "C_OUTPUT") { /*Instrução output*/
       c_output(&iafile, instruction_array[i].operando1);
     }
-    if (instruction_array[i].operacao == "S_INPUT") { /*Instrução input*/
+    else if (instruction_array[i].operacao == "S_INPUT") { /*Instrução input*/
       s_input(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
-    if (instruction_array[i].operacao == "S_OUTPUT") { /*Instrução output*/
+    else if (instruction_array[i].operacao == "S_OUTPUT") { /*Instrução output*/
       s_output(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
-    if (instruction_array[i].operacao == "COPY") { /*Instrução copy*/
+    else if (instruction_array[i].operacao == "COPY") { /*Instrução copy*/
       copy(&iafile, instruction_array[i].operando1, instruction_array[i].operando2);
     }
-    if (instruction_array[i].operacao == "STOP") { /*Instrução stop*/
+    else if (instruction_array[i].operacao == "STOP") { /*Instrução stop*/
       stop(&iafile);
       stop_flag = 1;
     }
-    if ((instruction_array[i].operacao == "SECTION") && (instruction_array[i].operando1 == "TEXT")) { /*Instrução stop*/
+    else if ((instruction_array[i].operacao == "SECTION") && (instruction_array[i].operando1 == "TEXT")) { /*Instrução stop*/
       stop_flag = 0;
+    }
+    else if (instruction_array[i].operacao == "IF") { /*Diretiva IF*/
+      if_flag = 0;
+      for (j=0;j<const_vector.size();j++) {
+        if (const_vector[j].label == instruction_array[i].operando1){
+          if_flag = atoi(const_vector[j].value.c_str());
+          break;
+        }
+      }
+      if(if_flag == 0){
+        i++;
+      }
     }
   }
 }
