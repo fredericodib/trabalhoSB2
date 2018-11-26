@@ -6,8 +6,8 @@ POSITIVE resb 4
 NEGATIVE resb 4
 NEUTRAL resb 4
 VECTOR resb 12
-C resb 2
-S resb 101
+C resb 4
+S resb 400
 aux_input resb 12
 aux_output resb 12
 
@@ -22,23 +22,6 @@ size_overflow_msg equ $-overflow_msg
 section .text
 _start: 
 
-
-; Ler do teclado
-sub esp, 4
-push eax
-mov ecx, C ; C_INPUT C
-call @LeerChar
-pop edx
-add esp, 4
-
-; Ler do teclado
-sub esp, 4
-push eax
-mov ecx, S ; C_INPUT S, 100
-mov edx, 101
-call @LeerString
-pop edx
-add esp, 4
 
 ; Ler do teclado
 sub esp, 4
@@ -260,7 +243,7 @@ add esp, 4
 ; Convert inteiro para string
 sub esp, 4
 push eax
-sub esp, 4 ; OUTPUT VECTOR
+sub esp, 4 ; OUTPUT NEUTRAL
 push eax
 sub esp, 4
 push esi
@@ -271,119 +254,7 @@ push edx
 sub esp, 4
 push ebx
 
-mov eax, [VECTOR]
-lea esi, [aux_output]
-mov ecx, 12
-call @EscreverInteiro
-
-pop ebx
-add esp, 4
-pop edx
-add esp, 4
-pop ecx
-add esp, 4
-pop esi
-add esp, 4
-pop eax
-add esp, 4
-; Termina de converter
-; Imprimir aux_output
-mov eax, 4
-mov ebx, 1
-mov ecx, aux_output
-mov edx, 12
-int 80h
-mov eax, 4
-mov ebx, 1
-mov ecx, blank_msg
-mov edx, size_blank_msg
-int 80h
-mov BYTE [aux_output], 0
-mov BYTE [aux_output+1], 0
-mov BYTE [aux_output+2], 0
-mov BYTE [aux_output+3], 0
-mov BYTE [aux_output+4], 0
-mov BYTE [aux_output+5], 0
-mov BYTE [aux_output+6], 0
-mov BYTE [aux_output+7], 0
-mov BYTE [aux_output+8], 0
-mov BYTE [aux_output+9], 0
-mov BYTE [aux_output+10], 0
-mov BYTE [aux_output+11], 0
-pop edx
-add esp, 4
-
-; Convert inteiro para string
-sub esp, 4
-push eax
-sub esp, 4 ; OUTPUT VECTOR + 1
-push eax
-sub esp, 4
-push esi
-sub esp, 4
-push ecx
-sub esp, 4
-push edx
-sub esp, 4
-push ebx
-
-mov eax, [VECTOR + 4]
-lea esi, [aux_output]
-mov ecx, 12
-call @EscreverInteiro
-
-pop ebx
-add esp, 4
-pop edx
-add esp, 4
-pop ecx
-add esp, 4
-pop esi
-add esp, 4
-pop eax
-add esp, 4
-; Termina de converter
-; Imprimir aux_output
-mov eax, 4
-mov ebx, 1
-mov ecx, aux_output
-mov edx, 12
-int 80h
-mov eax, 4
-mov ebx, 1
-mov ecx, blank_msg
-mov edx, size_blank_msg
-int 80h
-mov BYTE [aux_output], 0
-mov BYTE [aux_output+1], 0
-mov BYTE [aux_output+2], 0
-mov BYTE [aux_output+3], 0
-mov BYTE [aux_output+4], 0
-mov BYTE [aux_output+5], 0
-mov BYTE [aux_output+6], 0
-mov BYTE [aux_output+7], 0
-mov BYTE [aux_output+8], 0
-mov BYTE [aux_output+9], 0
-mov BYTE [aux_output+10], 0
-mov BYTE [aux_output+11], 0
-pop edx
-add esp, 4
-
-; Convert inteiro para string
-sub esp, 4
-push eax
-sub esp, 4 ; OUTPUT VECTOR + 2
-push eax
-sub esp, 4
-push esi
-sub esp, 4
-push ecx
-sub esp, 4
-push edx
-sub esp, 4
-push ebx
-
-mov eax, [VECTOR + 8]
+mov eax, [NEUTRAL]
 lea esi, [aux_output]
 mov ecx, 12
 call @EscreverInteiro
@@ -887,6 +758,9 @@ jg BOA_LABEL
 
 cmp eax, 0 ; JMPN MA_LABEL
 jl MA_LABEL
+
+cmp eax, 0 ; JMPZ NEUTRAL_LABEL
+jz NEUTRAL_LABEL
 FINAL_LABEL:
 
 ; Convert inteiro para string
@@ -1054,24 +928,6 @@ mov BYTE [aux_output+8], 0
 mov BYTE [aux_output+9], 0
 mov BYTE [aux_output+10], 0
 mov BYTE [aux_output+11], 0
-pop edx
-add esp, 4
-
-xor edx, edx ; COPY C S + 1
-add DL, [C]
-mov [S + 1], DL
-sub esp, 4
-push eax
-mov ecx, C ; C_OUTPUT C
-call @EscreverChar
-pop edx
-add esp, 4
-sub esp, 4
-push eax
-; Imprimir aux_output
-mov ecx, S ; S_OUTPUT S, 100
-mov edx, 100
-call @EscreverString
 pop edx
 add esp, 4
 
