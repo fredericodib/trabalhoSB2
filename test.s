@@ -1,16 +1,13 @@
 global _start
 
 section .bss
-NUM resb 12
-RESULT resb 4
+INIT resb 4
 aux_input resb 12
 aux_output resb 12
 
 section .data
 blank_msg db "", 0DH, 0AH
 size_blank_msg equ $-blank_msg
-overflow_msg db "Erro, houve um overflow", 0DH, 0AH
-size_overflow_msg equ $-overflow_msg
 
 section .text
 _start: 
@@ -19,7 +16,7 @@ _start:
 ; Ler do teclado
 sub esp, 4
 push eax
-mov eax, 3 ; INPUT NUM
+mov eax, 3 ; INPUT INIT
 mov ebx, 0
 mov ecx, aux_input
 mov edx, 12
@@ -35,7 +32,7 @@ push edx
 
 mov esi, aux_input
 call @LeerInteiro
-mov [NUM], eax
+mov [INIT], eax
 
 pop edx
 add esp, 4
@@ -47,84 +44,16 @@ pop edx
 add esp, 4
 ; Termina de converter
 
-; Ler do teclado
-sub esp, 4
-push eax
-mov eax, 3 ; INPUT NUM + 1
-mov ebx, 0
-mov ecx, aux_input
-mov edx, 12
-int 80h
+mov eax, [INIT] ; LOAD INIT
 
-; Converte string para inteiro
-sub esp, 4
-push esi
-sub esp, 4
-push eax
-sub esp, 4
-push edx
-
-mov esi, aux_input
-call @LeerInteiro
-mov [NUM + 4], eax
-
-pop edx
-add esp, 4
-pop eax
-add esp, 4
-pop esi
-add esp, 4
-pop edx
-add esp, 4
-; Termina de converter
-
-; Ler do teclado
-sub esp, 4
-push eax
-mov eax, 3 ; INPUT NUM + 2
-mov ebx, 0
-mov ecx, aux_input
-mov edx, 12
-int 80h
-
-; Converte string para inteiro
-sub esp, 4
-push esi
-sub esp, 4
-push eax
-sub esp, 4
-push edx
-
-mov esi, aux_input
-call @LeerInteiro
-mov [NUM + 8], eax
-
-pop edx
-add esp, 4
-pop eax
-add esp, 4
-pop esi
-add esp, 4
-pop edx
-add esp, 4
-; Termina de converter
-
-mov eax, [NUM] ; LOAD NUM
-
-mov edx, eax ; MULT NUM + 1
-imul dword [NUM + 4]
-call @overflow_error
-
-mov edx, eax ; MULT NUM + 2
-imul dword [NUM + 8]
-call @overflow_error
-
-mov [RESULT], eax ; STORE RESULT
+cmp eax, 0 ; JMPZ BOA_LABEL
+jz BOA_LABEL
+MA_LABEL:
 
 ; Convert inteiro para string
 sub esp, 4
 push eax
-sub esp, 4 ; OUTPUT RESULT
+sub esp, 4 ; OUTPUT INIT
 push eax
 sub esp, 4
 push esi
@@ -135,7 +64,7 @@ push edx
 sub esp, 4
 push ebx
 
-mov eax, [RESULT]
+mov eax, [INIT]
 lea esi, [aux_output]
 mov ecx, 12
 call @EscreverInteiro
@@ -176,174 +105,7 @@ mov BYTE [aux_output+10], 0
 mov BYTE [aux_output+11], 0
 pop edx
 add esp, 4
-
-; Convert inteiro para string
-sub esp, 4
-push eax
-sub esp, 4 ; OUTPUT NUM
-push eax
-sub esp, 4
-push esi
-sub esp, 4
-push ecx
-sub esp, 4
-push edx
-sub esp, 4
-push ebx
-
-mov eax, [NUM]
-lea esi, [aux_output]
-mov ecx, 12
-call @EscreverInteiro
-
-pop ebx
-add esp, 4
-pop edx
-add esp, 4
-pop ecx
-add esp, 4
-pop esi
-add esp, 4
-pop eax
-add esp, 4
-; Termina de converter
-; Imprimir aux_output
-mov eax, 4
-mov ebx, 1
-mov ecx, aux_output
-mov edx, 12
-int 80h
-mov eax, 4
-mov ebx, 1
-mov ecx, blank_msg
-mov edx, size_blank_msg
-int 80h
-mov BYTE [aux_output], 0
-mov BYTE [aux_output+1], 0
-mov BYTE [aux_output+2], 0
-mov BYTE [aux_output+3], 0
-mov BYTE [aux_output+4], 0
-mov BYTE [aux_output+5], 0
-mov BYTE [aux_output+6], 0
-mov BYTE [aux_output+7], 0
-mov BYTE [aux_output+8], 0
-mov BYTE [aux_output+9], 0
-mov BYTE [aux_output+10], 0
-mov BYTE [aux_output+11], 0
-pop edx
-add esp, 4
-
-; Convert inteiro para string
-sub esp, 4
-push eax
-sub esp, 4 ; OUTPUT NUM + 1
-push eax
-sub esp, 4
-push esi
-sub esp, 4
-push ecx
-sub esp, 4
-push edx
-sub esp, 4
-push ebx
-
-mov eax, [NUM + 4]
-lea esi, [aux_output]
-mov ecx, 12
-call @EscreverInteiro
-
-pop ebx
-add esp, 4
-pop edx
-add esp, 4
-pop ecx
-add esp, 4
-pop esi
-add esp, 4
-pop eax
-add esp, 4
-; Termina de converter
-; Imprimir aux_output
-mov eax, 4
-mov ebx, 1
-mov ecx, aux_output
-mov edx, 12
-int 80h
-mov eax, 4
-mov ebx, 1
-mov ecx, blank_msg
-mov edx, size_blank_msg
-int 80h
-mov BYTE [aux_output], 0
-mov BYTE [aux_output+1], 0
-mov BYTE [aux_output+2], 0
-mov BYTE [aux_output+3], 0
-mov BYTE [aux_output+4], 0
-mov BYTE [aux_output+5], 0
-mov BYTE [aux_output+6], 0
-mov BYTE [aux_output+7], 0
-mov BYTE [aux_output+8], 0
-mov BYTE [aux_output+9], 0
-mov BYTE [aux_output+10], 0
-mov BYTE [aux_output+11], 0
-pop edx
-add esp, 4
-
-; Convert inteiro para string
-sub esp, 4
-push eax
-sub esp, 4 ; OUTPUT NUM + 2
-push eax
-sub esp, 4
-push esi
-sub esp, 4
-push ecx
-sub esp, 4
-push edx
-sub esp, 4
-push ebx
-
-mov eax, [NUM + 8]
-lea esi, [aux_output]
-mov ecx, 12
-call @EscreverInteiro
-
-pop ebx
-add esp, 4
-pop edx
-add esp, 4
-pop ecx
-add esp, 4
-pop esi
-add esp, 4
-pop eax
-add esp, 4
-; Termina de converter
-; Imprimir aux_output
-mov eax, 4
-mov ebx, 1
-mov ecx, aux_output
-mov edx, 12
-int 80h
-mov eax, 4
-mov ebx, 1
-mov ecx, blank_msg
-mov edx, size_blank_msg
-int 80h
-mov BYTE [aux_output], 0
-mov BYTE [aux_output+1], 0
-mov BYTE [aux_output+2], 0
-mov BYTE [aux_output+3], 0
-mov BYTE [aux_output+4], 0
-mov BYTE [aux_output+5], 0
-mov BYTE [aux_output+6], 0
-mov BYTE [aux_output+7], 0
-mov BYTE [aux_output+8], 0
-mov BYTE [aux_output+9], 0
-mov BYTE [aux_output+10], 0
-mov BYTE [aux_output+11], 0
-pop edx
-add esp, 4
+BOA_LABEL:
 
 ; Encerra o programa
 mov eax, 1 ; STOP
@@ -462,21 +224,3 @@ int 80h
 ret
 ; ----------------------- LeerString fim ---------------------------------
 
-; ----------------------- overflow inicio ---------------------------------
-@overflow_error:
-cmp edx, 0
-je ret_overflow
-cmp edx, -1
-je ret_overflow
-mov eax, 4
-mov ebx, 1
-mov ecx, overflow_msg
-mov edx, size_overflow_msg
-int 80h
-; Encerra o programa
-mov eax, 1
-mov ebx, 0
-int 80h
-ret_overflow:
-ret
-; ----------------------- overflow fim ---------------------------------
