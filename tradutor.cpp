@@ -21,6 +21,7 @@
 #include "instructions/add.cpp"
 #include "instructions/jmpp.cpp"
 #include "instructions/jmpz.cpp"
+#include "instructions/jmpn.cpp"
 #include "instructions/jmp.cpp"
 #include "instructions/mult.cpp"
 #include "instructions/idiv.cpp"
@@ -66,6 +67,9 @@ void build_file() {
     }
     else if (instruction_array[i].operacao == "JMPP") { /*Instrução jmpp*/
       jmpp(&iafile, instruction_array[i].operando1);
+    }
+    else if (instruction_array[i].operacao == "JMPN") { /*Instrução jmpp*/
+      jmpn(&iafile, instruction_array[i].operando1);
     }
     else if (instruction_array[i].operacao == "JMPZ") { /*Instrução jmpp*/
       jmpz(&iafile, instruction_array[i].operando1);

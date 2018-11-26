@@ -46,8 +46,8 @@ add esp, 4
 
 mov eax, [INIT] ; LOAD INIT
 
-cmp eax, 0 ; JMPZ BOA_LABEL
-jz BOA_LABEL
+cmp eax, 0 ; JMPP BOA_LABEL
+jg BOA_LABEL
 MA_LABEL:
 
 ; Convert inteiro para string
