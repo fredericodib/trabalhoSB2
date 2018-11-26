@@ -27,7 +27,7 @@ void input(ofstream *iafile, string operando1) {
 	*iafile << "sub esp, 4" << endl;
 	*iafile << "push edx" << endl;
 	*iafile << endl << "mov esi, aux_input" << endl;
-	*iafile << "call @atoi" << endl;
+	*iafile << "call @LeerInteiro" << endl;
 	*iafile << "mov [" << ajusted_value(operando1) << "], eax" << endl;
 	*iafile << endl << "pop edx" << endl;
 	*iafile << "add esp, 4" << endl;

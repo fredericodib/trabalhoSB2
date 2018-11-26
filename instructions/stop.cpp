@@ -8,13 +8,13 @@
 
 using namespace std;
 
-void print_atoi(ofstream *iafile) {
-	*iafile << "; ----------------------- atoi inicio ---------------------------------" << endl;
+void print_ler_inteiro(ofstream *iafile) {
+	*iafile << "; ----------------------- LeerInteiro inicio ---------------------------------" << endl;
 	*iafile << "; input:" << endl;
 	*iafile << "\t; string -> esi" << endl;
 	*iafile << "; output:" << endl;
 	*iafile << "\t; num -> eax" << endl;
-	*iafile << "@atoi:" << endl;
+	*iafile << "@LeerInteiro:" << endl;
 	*iafile << "mov eax, 0" << endl;
 	*iafile << "mov edx, 0" << endl;
 	*iafile << "mov ecx, 0" << endl;
@@ -42,12 +42,12 @@ void print_atoi(ofstream *iafile) {
 	*iafile << "mov eax, edx" << endl;
 	*iafile << ".atoi_reallyexit:" << endl;
 	*iafile << "ret" << endl;
-	*iafile << "; ----------------------- atoi fim ---------------------------------" << endl << endl;
+	*iafile << "; ----------------------- LeerInteiro fim ---------------------------------" << endl << endl;
 }
 
-void print_itoa(ofstream *iafile) {
-	*iafile << "; ----------------------- itoa inicio ---------------------------------" << endl;
-	*iafile << "@itoa:" << endl;
+void print_escreve_inteiro(ofstream *iafile) {
+	*iafile << "; ----------------------- EscreverInteiro inicio ---------------------------------" << endl;
+	*iafile << "@EscreverInteiro:" << endl;
 	*iafile << "; input:" << endl;
 	*iafile << "\t; num -> eax" << endl;
 	*iafile << "\t; len -> ecx" << endl;
@@ -82,7 +82,54 @@ void print_itoa(ofstream *iafile) {
 	*iafile << "mov [esi], DL" << endl;
 	*iafile << ".itoa_reallyexit:" << endl;
 	*iafile << "ret" << endl;
-	*iafile << "; ----------------------- itoa fim ---------------------------------" << endl << endl;
+	*iafile << "; ----------------------- EscreverInteiro fim ---------------------------------" << endl << endl;
+}
+
+void print_escreve_char(ofstream *iafile) {
+	*iafile << "; ----------------------- EscreverChar inicio ---------------------------------" << endl;
+	*iafile << "@EscreverChar:" << endl;
+	*iafile << "mov eax, 4" << endl;
+	*iafile << "mov ebx, 1" << endl;
+	*iafile << "mov edx, 1" << endl;
+	*iafile << "int 80h" << endl;
+	*iafile << "mov eax, 4" << endl;
+	*iafile << "mov ebx, 1" << endl;
+	*iafile << "mov ecx, blank_msg" << endl;
+	*iafile << "mov edx, size_blank_msg" << endl;
+	*iafile << "int 80h" << endl;
+	*iafile << "ret" << endl;
+	*iafile << "; ----------------------- EscreverChar fim ---------------------------------" << endl << endl;
+}
+
+void print_ler_char(ofstream *iafile) {
+	*iafile << "; ----------------------- LeerChar inicio ---------------------------------" << endl;
+	*iafile << "@LeerChar:" << endl;
+	*iafile << "mov eax, 3" << endl;
+	*iafile << "mov ebx, 0" << endl;
+	*iafile << "mov edx, 2" << endl;
+	*iafile << "int 80h" << endl;
+	*iafile << "ret" << endl;
+	*iafile << "; ----------------------- LeerChar fim ---------------------------------" << endl << endl;
+}
+
+void print_escreve_string(ofstream *iafile) {
+	*iafile << "; ----------------------- EscreverString inicio ---------------------------------" << endl;
+	*iafile << "@EscreverString:" << endl;
+	*iafile << "mov eax, 4" << endl;
+	*iafile << "mov ebx, 1" << endl;
+	*iafile << "int 80h" << endl;
+	*iafile << "ret" << endl;
+	*iafile << "; ----------------------- EscreverString fim ---------------------------------" << endl << endl;
+}
+
+void print_ler_string(ofstream *iafile) {
+	*iafile << "; ----------------------- LeerString inicio ---------------------------------" << endl;
+	*iafile << "@LeerString:" << endl;
+	*iafile << "mov eax, 3" << endl;
+	*iafile << "mov ebx, 0" << endl;
+	*iafile << "int 80h" << endl;
+	*iafile << "ret" << endl;
+	*iafile << "; ----------------------- LeerString fim ---------------------------------" << endl << endl;
 }
 
 void print_overflow(ofstream *iafile) {
@@ -111,12 +158,12 @@ void stop(ofstream *iafile) {
 	*iafile << "mov eax, 1 ; STOP" << endl;
 	*iafile << "mov ebx, 0" << endl;
 	*iafile << "int 80h" << endl << endl;
-	if (has_input) { /*Caso tenha input imprime atoi*/
-		print_atoi(iafile);
-	}
-	if (has_output) { /*Caso tenha output imprime itoa*/
-		print_itoa(iafile);
-	}
+	print_ler_inteiro(iafile);
+	print_escreve_inteiro(iafile);
+	print_escreve_char(iafile);
+	print_ler_char(iafile);
+	print_escreve_string(iafile);
+	print_ler_string(iafile);
 	if (has_mult) { /*Caso tenha um mult imprime a função de overflow*/
 		print_overflow(iafile);
 	}

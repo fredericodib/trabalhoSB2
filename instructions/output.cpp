@@ -27,7 +27,7 @@ void output(ofstream *iafile, string operando1) {
 	*iafile << endl << "mov eax, [" << ajusted_value(operando1) << "]" << endl;
 	*iafile << "lea esi, [aux_output]" << endl;
 	*iafile << "mov ecx, 12" << endl;
-	*iafile << "call @itoa" << endl;
+	*iafile << "call @EscreverInteiro" << endl;
 	*iafile << endl << "pop ebx" << endl;
 	*iafile << "add esp, 4" << endl;
 	*iafile << "pop edx" << endl;

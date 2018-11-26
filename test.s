@@ -36,7 +36,7 @@ sub esp, 4
 push edx
 
 mov esi, aux_input
-call @atoi
+call @LeerInteiro
 mov [NUM], eax
 
 pop edx
@@ -99,7 +99,7 @@ push ebx
 mov eax, [RESULT]
 lea esi, [aux_output]
 mov ecx, 12
-call @itoa
+call @EscreverInteiro
 
 pop ebx
 add esp, 4
@@ -143,12 +143,12 @@ mov eax, 1 ; STOP
 mov ebx, 0
 int 80h
 
-; ----------------------- atoi inicio ---------------------------------
+; ----------------------- LeerInteiro inicio ---------------------------------
 ; input:
 	; string -> esi
 ; output:
 	; num -> eax
-@atoi:
+@LeerInteiro:
 mov eax, 0
 mov edx, 0
 mov ecx, 0
@@ -176,10 +176,10 @@ sub edx, eax
 mov eax, edx
 .atoi_reallyexit:
 ret
-; ----------------------- atoi fim ---------------------------------
+; ----------------------- LeerInteiro fim ---------------------------------
 
-; ----------------------- itoa inicio ---------------------------------
-@itoa:
+; ----------------------- EscreverInteiro inicio ---------------------------------
+@EscreverInteiro:
 ; input:
 	; num -> eax
 	; len -> ecx
@@ -214,7 +214,46 @@ dec esi
 mov [esi], DL
 .itoa_reallyexit:
 ret
-; ----------------------- itoa fim ---------------------------------
+; ----------------------- EscreverInteiro fim ---------------------------------
+
+; ----------------------- EscreverChar inicio ---------------------------------
+@EscreverChar:
+mov eax, 4
+mov ebx, 1
+mov edx, 1
+int 80h
+mov eax, 4
+mov ebx, 1
+mov ecx, blank_msg
+mov edx, size_blank_msg
+int 80h
+ret
+; ----------------------- EscreverChar fim ---------------------------------
+
+; ----------------------- LeerChar inicio ---------------------------------
+@LeerChar:
+mov eax, 3
+mov ebx, 0
+mov edx, 2
+int 80h
+ret
+; ----------------------- LeerChar fim ---------------------------------
+
+; ----------------------- EscreverString inicio ---------------------------------
+@EscreverString:
+mov eax, 4
+mov ebx, 1
+int 80h
+ret
+; ----------------------- EscreverString fim ---------------------------------
+
+; ----------------------- LeerString inicio ---------------------------------
+@LeerString:
+mov eax, 3
+mov ebx, 0
+int 80h
+ret
+; ----------------------- LeerString fim ---------------------------------
 
 ; ----------------------- overflow inicio ---------------------------------
 @overflow_error:
