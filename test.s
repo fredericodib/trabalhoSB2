@@ -555,7 +555,7 @@ add esp, 4
 
 xor edx, edx ; COPY NEGATIVE VECTOR + 1
 mov edx, [NEGATIVE]
-mov [VECTOR + 1], edx
+mov [VECTOR + 4], edx
 
 jmp FINAL_LABEL ; jmp FINAL_LABEL
 BOA_LABEL:
@@ -687,7 +687,7 @@ add esp, 4
 
 xor edx, edx ; COPY POSITIVE VECTOR + 1
 mov edx, [POSITIVE]
-mov [VECTOR + 1], edx
+mov [VECTOR + 4], edx
 
 jmp FINAL_LABEL ; jmp FINAL_LABEL
 NEUTRAL_LABEL:
@@ -819,7 +819,7 @@ add esp, 4
 
 xor edx, edx ; COPY NEUTRAL VECTOR + 1
 mov edx, [NEUTRAL]
-mov [VECTOR + 1], edx
+mov [VECTOR + 4], edx
 
 jmp FINAL_LABEL ; jmp FINAL_LABEL
 INITIAL_LABEL:

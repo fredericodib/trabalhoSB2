@@ -19,7 +19,7 @@ void copy(ofstream *iafile, string operando1, string operando2) {
 		}
 		else {
 			*iafile << "mov edx, [" << ajusted_value(operando1) << "]"<< endl;
-			*iafile << "mov [" << operando2 << "], edx" <<endl;
+			*iafile << "mov [" << ajusted_value(operando2) << "], edx" <<endl;
 		}
 	}
 	else { /*Caso estejamos trabalhando com bytes*/
