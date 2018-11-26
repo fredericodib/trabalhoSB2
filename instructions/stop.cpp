@@ -56,7 +56,7 @@ void print_escreve_inteiro(ofstream *iafile) {
 	*iafile << "mov edx, 0" << endl;
 	*iafile << "mov edi, 0" << endl;
 	*iafile << "cmp eax, 0" << endl;
-	*iafile << "jg .itoa_begin" << endl;
+	*iafile << "jge .itoa_begin" << endl;
 	*iafile << "sub edx, eax" << endl;
 	*iafile << "mov eax, edx" << endl;
 	*iafile << "mov edx, 0" << endl;
